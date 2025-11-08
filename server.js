@@ -57,26 +57,26 @@ app.get('/api/students/download', async (req, res) => {
     const [rows] = await pool.query('SELECT * FROM students ORDER BY created_at DESC');
 
     const workbook = new ExcelJS.Workbook();
-    const sheet = workbook.addWorksheet('Students');
+    const sheet = workbook.addWorksheet('Tucasa-tia');
 
     sheet.columns = [
-      { header: 'ID', key: 'id', width: 8 },
+      { header: 'S/N', key: 'id', width: 5 },
       { header: 'Full Name', key: 'full_name', width: 30 },
       { header: 'Gender', key: 'gender', width: 10 },
-      { header: 'Address', key: 'address', width: 40 },
-      { header: 'Baptism Status', key: 'baptism_status', width: 18 },
+      { header: 'Address', key: 'address', width: 25 },
+      { header: 'Baptism Status', key: 'baptism_status', width: 15 },
       { header: 'Email', key: 'email', width: 30 },
-      { header: 'Phone', key: 'phone', width: 18 },
-      { header: 'Course', key: 'course', width: 20 },
-      { header: 'Year', key: 'year_of_study', width: 12 },
-      { header: 'Leadership Position', key: 'leadership_position', width: 25 },
-      { header: 'Created At', key: 'created_at', width: 20 },
+      { header: 'Phone', key: 'phone', width: 16 },
+      { header: 'Course', key: 'course', width: 15 },
+      { header: 'Year', key: 'year_of_study', width: 8 },
+      { header: 'Leadership Position', key: 'leadership_position', width: 20 },
+      { header: 'Registered on', key: 'created_at', width: 18 },
     ];
 
     rows.forEach(r => sheet.addRow(r));
 
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    res.setHeader('Content-Disposition', `attachment; filename=students.xlsx`);
+    res.setHeader('Content-Disposition', `attachment; filename=Tucasa-Registration.xlsx`);
 
     await workbook.xlsx.write(res);
     res.end();
