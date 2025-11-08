@@ -54,23 +54,23 @@ app.get('/api/students', async (req, res) => {
 
 app.get('/api/students/download', async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT * FROM students ORDER BY created_at DESC');
+    const [rows] = await pool.query('SELECT * FROM students ORDER BY created_at ASC');
 
     const workbook = new ExcelJS.Workbook();
     const sheet = workbook.addWorksheet('Tucasa-tia');
 
     sheet.columns = [
-      { header: 'S/N', key: 'id', width: 5 },
-      { header: 'Full Name', key: 'full_name', width: 30 },
-      { header: 'Gender', key: 'gender', width: 10 },
-      { header: 'Address', key: 'address', width: 25 },
-      { header: 'Baptism Status', key: 'baptism_status', width: 15 },
+      { header: 'S/N', key: 'id', width: 3 },
+      { header: 'Full Name', key: 'full_name', width: 28 },
+      { header: 'Gender', key: 'gender', width: 8 },
+      { header: 'Address', key: 'address', width: 18 },
+      { header: 'Baptism Status', key: 'baptism_status', width: 14 },
       { header: 'Email', key: 'email', width: 30 },
-      { header: 'Phone', key: 'phone', width: 16 },
-      { header: 'Course', key: 'course', width: 15 },
-      { header: 'Year', key: 'year_of_study', width: 8 },
+      { header: 'Phone', key: 'phone', width: 14 },
+      { header: 'Course', key: 'course', width: 10 },
+      { header: 'Year', key: 'year_of_study', width: 5 },
       { header: 'Leadership Position', key: 'leadership_position', width: 20 },
-      { header: 'Registered on', key: 'created_at', width: 18 },
+      { header: 'Registered on', key: 'created_at', width: 14 },
     ];
 
     rows.forEach(r => sheet.addRow(r));
