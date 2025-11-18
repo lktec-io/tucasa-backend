@@ -44,7 +44,7 @@ app.post('/api/register', async (req, res) => {
 
 app.get('/api/students', async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT * FROM students ORDER BY created_at DESC');
+    const [rows] = await pool.query('SELECT * FROM students ORDER BY created_at ASC');
     res.json(rows);
   } catch (err) {
     console.error(err);
