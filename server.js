@@ -28,6 +28,20 @@ app.post('/api/register', async (req, res) => {
       email, phone, course, year_of_study, leadership_position
     } = req.body;
 
+    // 1️⃣ Check kama user tayari yupo kwa email au phone
+    const [existing] = await pool.execute(
+      "SELECT id FROM students WHERE email = ? OR phone = ? LIMIT 1",
+      [email, phone]
+    );
+
+    if (existing.length > 0) {
+      return res.status(409).json({
+        success: false,
+        message: "You are already registered!"
+      });
+    }
+
+    // 2️⃣ Kama hayupo, then insert
     const [result] = await pool.execute(
       `INSERT INTO students 
        (full_name, gender, address, baptism_status, email, phone, course, year_of_study, leadership_position)
@@ -41,6 +55,7 @@ app.post('/api/register', async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 });
+
 
 app.get('/api/students', async (req, res) => {
   try {
